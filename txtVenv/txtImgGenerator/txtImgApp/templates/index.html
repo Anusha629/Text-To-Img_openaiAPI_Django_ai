@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Image</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .chatbot {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+        }
+        .chat-header {
+            background-color: #075E54;
+            color: #fff;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header h3 {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        .chat-messages {
+            overflow-y: scroll;
+            padding: 1rem;
+            max-height: 300px;
+        }
+        .chat-message {
+            display: flex;
+            margin-bottom: 20px;
+            max-width: 70%;
+        }
+        .chat-message img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .chat-message-content {
+            background-color: #DCF8C6;
+            color: #000;
+            border-radius: 10px;
+            padding: 10px;
+            margin-left: 10px;
+            font-size: 16px;
+            word-wrap: break-word;
+            line-height: 1.5;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .chat-message-content::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: -10px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid #DCF8C6;
+            transform: translateY(-50%);
+        }
+        .chat-input {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: #F4F4F4;
+            border-top: 1px solid #ccc;
+        }
+        .chat-input input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        .chat-input button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #075E54;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .chat-input button[type="submit"]:hover {
+            background-color: #044C39;
+        }
+    </style>
+</head>
+<body>
+    <div class="chatbot">
+        <div class="chat-header">
+            <h3>Text to Image Generator</h3>
+        </div>
+        <div class="chat-messages">
+            <div class="chat-message">
+                <div class="chat-message-content">
+                    <p>Hello, how can I help you today?</p>
+                </div>
+            </div>
+        </div>
+        <form class="chat-input" method="get" action="{% url 'generate_image' %}">
+            <input type="text" name="text_input" placeholder="Generate your image here...">
+            <button type="submit">Generate</button>
+        </form>
+        {% if image_url %}
+        <div class="chat-messages">
+            <div class="chat-message">
+                <div class="chat-message-content">
+                    <img src="{{ image_url }}" alt="Generated Image">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
